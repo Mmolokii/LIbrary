@@ -11,39 +11,44 @@
   <header>
     <h1>Library</h1>
   </header>
+  
   <main>
-    <button class="add-book">+ Add book</button>
-
-    <!-- Book Template -->
-    <div id="book-container">
-      <div class="book-card">
-        <p class="book-title"></p>
-        <p class="book-author"></p>
-        <p class="book-pages"></p>
-        <button class="status">Toggle Read</button>
-        <button class="book-remove">Remove</button>
-      </div>
-    </div>
-    
-    <!-- Add Book form Popup -->
-    <div class="add-book-popup hidden">
-      <h2>Add new book</h2>
-      <form action="" method="post">
-        <fieldset>
-          <input type="text" name="title" id="input-title" placeholder="Title" required>
-
-          <input type="text" name="author" id="input-author" placeholder="Author required">
-
-          <input type="text" name="pages" id="input-pages" placeholder="Pages" required>
-          
-          <label class="read-label" for="read-pages">Have you read it?</label>
-          <input type="checkbox" name="read-pages" id="input-status" required>
-        </fieldset>
-        
-        <button type="submit">Submit</button>
-        <button type="button" class="close-popup">Close</button>
-      </form>
-    </div>
+    <button class="add-book">+ Add Book</button>
+    <div id="book-container"></div>
   </main>
+
+  <!-- Book Template -->
+  <template id="book-template">
+    <div class="book-card">
+      <p class="book-title"></p>
+      <p class="book-author"></p>
+      <p class="book-pages"></p>
+      <button class="status">Toggle Read</button>
+      <button class="book-remove">Remove</button>
+    </div>
+  </template>
+
+  <!-- Add Book Form Popup -->
+  <div class="add-book-popup hidden">
+    <h2>Add New Book</h2>
+    <form id="book-form">
+      <fieldset>
+        <label for="input-title">Title:</label>
+        <input type="text" id="input-title" name="title" placeholder="Title" required>
+
+        <label for="input-author">Author:</label>
+        <input type="text" id="input-author" name="author" placeholder="Author" required>
+
+        <label for="input-pages">Pages:</label>
+        <input type="number" id="input-pages" name="pages" placeholder="Pages" required min="1">
+
+        <label for="input-status">Have you read it?</label>
+        <input type="checkbox" id="input-status" name="status">
+      </fieldset>
+
+      <button type="submit">Submit</button>
+      <button type="button" class="close-popup">Close</button>
+    </form>
+  </div>
 </body>
 </html>
