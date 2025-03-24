@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library System</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Library</h1>
+  </header>
+  <main>
+    <button class="add-book">+ Add book</button>
+
+    <!-- Book Template -->
+    <div id="book-container">
+      <div class="book-card">
+        <p class="book-title"></p>
+        <p class="book-author"></p>
+        <p class="book-pages"></p>
+        <button class="status">Toggle Read</button>
+        <button class="book-remove">Remove</button>
+      </div>
+    </div>
+    
+    <!-- Add Book form Popup -->
+    <div class="add-book-popup hidden">
+      <h2>Add new book</h2>
+      <form action="" method="post">
+        <fieldset>
+          <input type="text" name="title" id="input-title" placeholder="Title" required>
+
+          <input type="text" name="author" id="input-author" placeholder="Author required">
+
+          <input type="text" name="pages" id="input-pages" placeholder="Pages" required>
+          
+          <label class="read-label" for="read-pages">Have you read it?</label>
+          <input type="checkbox" name="read-pages" id="input-status" required>
+        </fieldset>
+        
+        <button type="submit">Submit</button>
+        <button type="button" class="close-popup">Close</button>
+      </form>
+    </div>
+  </main>
+</body>
+</html>
