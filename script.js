@@ -1,29 +1,36 @@
 const myLibrary = [];
 
-function Book(title, author, pages, read){
-  this.id = crypto.randomUUID(); // generate a unique ID 
-  this.title = title; 
-  this.author = author; 
-  this.pages = pages; 
-  this.read = read; 
+const libraryContainer = document.getElementById("book-container");
+const addBookPopup = document.querySelector(".add-book-popup");
+const addBookButton = document.querySelector(".add-book");
+const closeButton = document.querySelector(".close-popup");
+const bookForm = document.querySelector("form");
+
+// Constructor function for a Book object
+function Book(title, author, pages, read) {
+  this.id = crypto.randomUUID(); // Generate unique ID
+  this.title = title;
+  this.author = author;
+  this.pages = pages;
+  this.read = read;
 }
 
-function addBookToLibrary(title, author, pages, read){
+// Adds a new book to the library
+function addBookToLibrary(title, author, pages, read) {
   const newBook = new Book(title, author, pages, read);
-  myLibrary.push(newBook); 
+  myLibrary.push(newBook);
 }
 
+// Displays all books in the UI
 function displayBooks() {
-  const libraryContainer = document.getElementById("book-container"); 
-  libraryContainer.innerHTML = "";
+  libraryContainer.innerHTML = ""; // Clear existing content
 
   myLibrary.forEach((book) => {
-
     const bookCard = document.createElement("div");
     bookCard.classList.add("book-card");
-    bookCard.setAttribute("data-id", book.id); // Unique identifier
+    bookCard.setAttribute("data-id", book.id);
 
-    // Add book details
+    // Populate book card with details
     bookCard.innerHTML = `
       <p class="book-title">${book.title}</p>
       <p class="book-author">by ${book.author}</p>
@@ -32,16 +39,18 @@ function displayBooks() {
       <button class="book-remove">Remove</button>
     `;
 
-    libraryContainer.appendChild(bookCard);
-
     const removeButton = bookCard.querySelector(".book-remove"); 
     removeButton.addEventListener("click", () => removeBook(book.id)); 
 
     const readStatus = bookCard.querySelector(".status");
     readStatus.addEventListener("click", () => toggleReadStatus(book.id)); 
+    readStatus.classList.toggle("unread", !book.read);
+
+    libraryContainer.appendChild(bookCard)
   });
 }
 
+// Removes a book from the library
 function removeBook(bookId){
   const bookIndex = myLibrary.findIndex(book => book.id === bookId);
   if(bookIndex !== -1){
@@ -51,6 +60,7 @@ function removeBook(bookId){
   displayBooks(); 
 }
 
+// Toggles read status of a book
 function toggleReadStatus(bookId){
   const book = myLibrary.find(book => book.id === bookId); 
   if(book){
@@ -60,60 +70,53 @@ function toggleReadStatus(bookId){
   displayBooks(); 
 }
 
-
-addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 310, true);
-addBookToLibrary("1984", "George Orwell", 328, false);
-addBookToLibrary("To Kill a Mockingbird", "Harper Lee", 281, true);
-
-console.log(myLibrary); // Check if books are correctly added
-
-displayBooks(); 
-
-// Select button and popup elements
-const  addBookBtn = document.querySelector(".add-book"); 
-const popup = document.querySelector(".add-book-popup"); 
-
-// show popup
-function showPopup(){
-  popup.style.display = "block"; 
-}
-
-// Attach event listener to the Add Book button
-addBookBtn.addEventListener("click", showPopup);
-
 function addBookFromForm(event) {
-  event.preventDefault(); // Prevent form from refreshing the page
+  event.preventDefault(); // Prevent page refresh
 
-  // Select input fields
   const titleInput = document.getElementById("input-title").value.trim();
   const authorInput = document.getElementById("input-author").value.trim();
   const pagesInput = document.getElementById("input-pages").value.trim();
-  const readStatus = document.getElementById("input-status").checked; // true if checked, false otherwise
+  const readStatus = document.getElementById("input-status").checked;
 
-  // Validate input (basic validation)
   if (titleInput === "" || authorInput === "" || pagesInput === "" || isNaN(pagesInput)) {
     alert("Please fill out all fields correctly.");
     return;
   }
 
-  // Convert pages input to a number
   const pages = parseInt(pagesInput, 10);
 
-  // Add new book to the library
   addBookToLibrary(titleInput, authorInput, pages, readStatus);
-
-  // Refresh book display
   displayBooks();
 
-  // Clear form inputs
-  document.getElementById("input-title").value = "";
-  document.getElementById("input-author").value = "";
-  document.getElementById("input-pages").value = "";
-  document.getElementById("input-status").checked = false;
-
-  // Close popup if using a modal
-  document.querySelector(".add-book-popup").style.display = "none";
+  // Clear form and close popup
+  bookForm.reset();
+  addBookPopup.style.display = "none";
 }
 
-// Attach event listener to the form
-document.querySelector("form").addEventListener("submit", addBookFromForm);
+// Opens the Add Book popup
+function openForm() {
+  addBookPopup.style.display = "block";
+}
+
+// Closes the Add Book popup
+function closeForm() {
+  addBookPopup.style.display = "none";
+}
+
+addBookButton.addEventListener("click", openForm);
+closeButton.addEventListener("click", closeForm);
+bookForm.addEventListener("submit", addBookFromForm);
+
+// Optional: Close form when clicking outside
+window.addEventListener("click", (event) => {
+  if (event.target === addBookPopup) {
+    closeForm();
+  }
+});
+
+// Default Books for Testing
+addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 310, true);
+addBookToLibrary("1984", "George Orwell", 328, false);
+addBookToLibrary("To Kill a Mockingbird", "Harper Lee", 281, true);
+
+displayBooks(); // Render initial books
