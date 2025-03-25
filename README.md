@@ -2,7 +2,7 @@
 This is a simple **Library App** where users can add, view, mark books as read/unread, and remove books from their personal collection. The app is built using **HTML, CSS, and JavaScript**, with a focus on **DOM manipulation** and **event handling**.
 
 ## Demo
-[Live Demo (https://mmolokii.github.io/LIbrary/)]
+https://mmolokii.github.io/LIbrary/
 
 ## Features
 1. Add new books with title, author, page count, and read status
