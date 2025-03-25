@@ -112,6 +112,10 @@ main {
   background: #1e7e34;
 }
 
+.status.unread {
+  background-color: #dc6a35;
+}
+
 /* REMOVE BUTTON */
 .book-remove {
   background: #dc3545;
